@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>卡牌大师 · 智能识别</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- ===== 粒子背景 ===== -->
+    <canvas id="particlesCanvas"></canvas>
+
+    <!-- ===== 光晕装饰 ===== -->
+    <div class="glow-orb glow-orb--1"></div>
+    <div class="glow-orb glow-orb--2"></div>
+    <div class="glow-orb glow-orb--3"></div>
+
+    <!-- ============================================================
+    顶部导航栏
+    ============================================================ -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <span class="nav-logo">🃏 卡牌大师</span>
+            <span class="nav-badge">AI v2.0</span>
+        </div>
+        <div class="nav-right">
+            <span class="nav-user" id="userDisplay">👤 <span class="user-name">用户</span></span>
+            <button class="btn-logout" id="logoutBtn">退出登录</button>
+        </div>
+    </nav>
+
+    <!-- ============================================================
+    主体容器
+    ============================================================ -->
+    <div class="main-container">
+
+        <!-- ===== 第一行：上传区 + 识别结果 ===== -->
+        <div class="row top-row">
+
+            <!-- 左侧：上传区域 -->
+            <div class="col upload-col">
+                <h3 style="color:rgba(255,255,255,0.5);font-size:14px;font-weight:500;margin-bottom:14px;letter-spacing:0.5px;">
+                    📤 上传卡牌图片
+                </h3>
+
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-content" id="uploadContent">
+                        <span class="upload-icon-big">🖼️</span>
+                        <p><strong>点击上传</strong> 或拖拽图片到此处</p>
+                        <p class="sub-text">支持 JPG / PNG / WebP · 最大 10MB</p>
+                    </div>
+                    <input type="file" id="fileInput" accept="image/*" style="display:none;" />
+                </div>
+
+                <!-- 文件信息（上传后显示） -->
+                <div class="file-info" id="fileInfo" style="display:none;">
+                    <span class="file-icon">📄</span>
+                    <div class="file-detail">
+                        <span class="file-name" id="fileName">image.jpg</span>
+                        <span class="file-size" id="fileSize">2.4 MB</span>
+                    </div>
+                    <button class="btn-reset" id="resetBtn">✕ 重新选择</button>
+                </div>
+            </div>
+
+            <!-- 右侧：识别结果 -->
+            <div class="col result-col">
+                <h3>🎯 识别结果</h3>
+
+                <div class="result-item">
+                    <span class="label">🏷️ 卡牌类别</span>
+                    <span class="value" id="resultCategory">等待识别…</span>
+                </div>
+
+                <div class="result-item">
+                    <span class="label">📊 置信度</span>
+                    <div class="progress-wrap">
+                        <div class="progress-track">
+                            <div class="progress-bar" id="confidenceBar" style="width:0%;"></div>
+                        </div>
+                        <span class="progress-text" id="confidenceText">0%</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-gold" id="recognizeBtn" disabled>
+                    <span class="btn-content">
+                        <span class="btn-text">🔍 开始识别</span>
+                        <span class="spinner"></span>
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ===== 第二行：原图预览 + 标注效果图 ===== -->
+        <div class="row bottom-row">
+
+            <div class="col preview-col">
+                <h4>📷 原图预览</h4>
+                <div class="image-placeholder" id="originalPreview">
+                    <div class="placeholder-text">
+                        <span class="ph-icon">🖼️</span>
+                        <span>暂无图片</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col preview-col">
+                <h4>🏷️ 标注效果图</h4>
+                <div class="image-placeholder" id="annotatedPreview">
+                    <div class="placeholder-text">
+                        <span class="ph-icon">✨</span>
+                        <span>等待识别…</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===== 底部：下载按钮 ===== -->
+        <div class="bottom-bar">
+            <button class="btn btn-download" id="downloadBtn" disabled>
+                <span class="btn-content">
+                    <span class="btn-text">📥 下载标注图</span>
+                    <span class="spinner"></span>
+                </span>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- ============================================================
+    JavaScript
+    ============================================================ -->
+    <script src="script.js"></script>
+
+    <!-- ===== 主页专用增强逻辑 ===== -->
+    <script>
+        (function() {
+            // ---- 确保已登录 ----
+            if (localStorage.getItem('isLogin') !== 'true') {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // ---- 显示用户名 ----
+            const currentUser = localStorage.getItem('currentUser') || '用户';
+            const userDisplay = document.getElementById('userDisplay');
+            if (userDisplay) {
+                userDisplay.innerHTML = '👤 <span class="user-name">' + currentUser + '</span>';
+            }
+
+            // ---- DOM 引用 ----
+            const uploadZone = document.getElementById('uploadZone');
+            const fileInput = document.getElementById('fileInput');
+            const uploadContent = document.getElementById('uploadContent');
+            const fileInfo = document.getElementById('fileInfo');
+            const fileName = document.getElementById('fileName');
+            const fileSize = document.getElementById('fileSize');
+            const resetBtn = document.getElementById('resetBtn');
+            const originalPreview = document.getElementById('originalPreview');
+            const annotatedPreview = document.getElementById('annotatedPreview');
+            const resultCategory = document.getElementById('resultCategory');
+            const confidenceBar = document.getElementById('confidenceBar');
+            const confidenceText = document.getElementById('confidenceText');
+            const recognizeBtn = document.getElementById('recognizeBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+
+            let currentFile = null;
+            let currentAnnotatedDataUrl = null;
+
+            // ---- 点击上传 ----
+            uploadZone.addEventListener('click', function() {
+                fileInput.click();
+            });
+
+            // ---- 文件选择 ----
+            fileInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    handleFile(this.files[0]);
+                }
+            });
+
+            // ---- 拖拽上传 ----
+            uploadZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('dragover');
+            });
+
+            uploadZone.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+            });
+
+            uploadZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    handleFile(e.dataTransfer.files[0]);
+                }
+            });
+
+            // ---- 核心：处理文件 ----
+            function handleFile(file) {
+                // 校验：只允许图片
+                if (!file.type.startsWith('image/')) {
+                    alert('⚠️ 请上传图片文件（JPG / PNG / WebP）');
+                    return;
+                }
+
+                // 校验：文件大小 < 10MB
+                if (file.size > 10 * 1024 * 1024) {
+                    alert('⚠️ 文件大小不能超过 10MB');
+                    return;
+                }
+
+                currentFile = file;
+
+                // 显示文件信息
+                const sizeKB = (file.size / 1024).toFixed(1);
+                const sizeMB = (file.size / 1024 / 1024).toFixed(2);
+                fileName.textContent = file.name;
+                fileSize.textContent = sizeMB > 1 ? sizeMB + ' MB' : sizeKB + ' KB';
+                fileInfo.style.display = 'flex';
+                uploadContent.style.display = 'none';
+
+                // 本地预览原图
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    originalPreview.innerHTML = '<img src="' + e.target.result + '" alt="原图" />';
+                };
+                reader.readAsDataURL(file);
+
+                // 清空之前的结果
+                clearResult();
+
+                // 启用识别按钮
+                recognizeBtn.disabled = false;
+                downloadBtn.disabled = true;
+            }
+
+            // ---- 重置 ----
+            resetBtn.addEventListener('click', function() {
+                resetAll();
+            });
+
+            function resetAll() {
+                currentFile = null;
+                currentAnnotatedDataUrl = null;
+                fileInput.value = '';
+                fileInfo.style.display = 'none';
+                uploadContent.style.display = 'block';
+                originalPreview.innerHTML = `
+                            <div class="placeholder-text">
+                                <span class="ph-icon">🖼️</span>
+                                <span>暂无图片</span>
+                            </div>
+                        `;
+                clearResult();
+                recognizeBtn.disabled = true;
+                downloadBtn.disabled = true;
+            }
+
+            function clearResult() {
+                resultCategory.textContent = '等待识别…';
+                confidenceBar.style.width = '0%';
+                confidenceText.textContent = '0%';
+                annotatedPreview.innerHTML = `
+                            <div class="placeholder-text">
+                                <span class="ph-icon">✨</span>
+                                <span>等待识别…</span>
+                            </div>
+                        `;
+                currentAnnotatedDataUrl = null;
+                downloadBtn.disabled = true;
+            }
+
+            // ---- 识别功能 ----
+            recognizeBtn.addEventListener('click', async function() {
+                if (!currentFile) {
+                    alert('请先上传一张卡牌图片');
+                    return;
+                }
+
+                // ---- 按钮加载状态 ----
+                this.classList.add('loading');
+                this.disabled = true;
+
+                // ---- 显示加载动画 ----
+                annotatedPreview.innerHTML = `
+                            <div style="display:flex;flex-direction:column;align-items:center;gap:16px;color:#f6b83d;">
+                                <div class="loading-dots">
+                                    <span></span><span></span><span></span>
+                                </div>
+                                <span style="font-size:14px;color:rgba(255,255,255,0.4);">AI 正在分析卡牌图案…</span>
+                            </div>
+                        `;
+
+                try {
+                    // ---- 构建 FormData ----
+                    const formData = new FormData();
+                    formData.append('file', currentFile);
+
+                    // 【重要】后端地址，联调时改成 C 提供的实际地址
+                    const API_URL = 'http://127.0.0.1:5000/api/upload';
+
+                    // ---- 发送请求 ----
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('HTTP ' + response.status);
+                    }
+
+                    const data = await response.json();
+
+                    // ---- 处理返回数据 ----
+                    if (data.code === 0) {
+                        const d = data.data;
+
+                        // 显示类别
+                        resultCategory.textContent = d.category || '未知';
+
+                        // 显示置信度
+                        const conf = d.confidence || 0;
+                        const confPercent = (conf * 100).toFixed(0);
+                        confidenceBar.style.width = confPercent + '%';
+                        confidenceText.textContent = confPercent + '%';
+
+                        // 显示标注图
+                        if (d.annotated_image) {
+                            annotatedPreview.innerHTML = '<img src="' + d.annotated_image +
+                                '" alt="标注效果图" />';
+                            currentAnnotatedDataUrl = d.annotated_image;
+                            downloadBtn.disabled = false;
+                        }
+                    } else {
+                        throw new Error(data.message || '识别失败');
+                    }
+
+                } catch (error) {
+                    console.error('识别请求失败:', error);
+
+                    // ---- 自动切换 Mock 模式 ----
+                    if (error.message.includes('Failed to fetch') || error.message.includes('HTTP')) {
+                        const useMock = confirm(
+                            '⚠️ 后端服务未启动，是否使用演示模式（Mock）？\n\n' +
+                            '点击「确定」使用模拟数据演示\n' +
+                            '点击「取消」稍后重试'
+                        );
+                        if (useMock) {
+                            mockRecognize();
+                        } else {
+                            annotatedPreview.innerHTML = `
+                                        <div class="placeholder-text" style="color:#fca5a5;">
+                                            <span class="ph-icon">⏳</span>
+                                            <span>已取消，请启动后端服务后重试</span>
+                                        </div>
+                                    `;
+                        }
+                    } else {
+                        annotatedPreview.innerHTML = `
+                                    <div class="placeholder-text" style="color:#fca5a5;">
+                                        <span class="ph-icon">❌</span>
+                                        <span>识别失败：${error.message}</span>
+                                    </div>
+                                `;
+                    }
+                } finally {
+                    this.classList.remove('loading');
+                    this.disabled = false;
+                }
+            });
+
+            // ---- Mock 模式（演示用） ----
+            function mockRecognize() {
+                recognizeBtn.disabled = true;
+
+                annotatedPreview.innerHTML = `
+                            <div style="display:flex;flex-direction:column;align-items:center;gap:16px;color:#f6b83d;">
+                                <div class="loading-dots">
+                                    <span></span><span></span><span></span>
+                                </div>
+                                <span style="font-size:14px;color:rgba(255,255,255,0.4);">演示模式：模拟识别中…</span>
+                            </div>
+                        `;
+
+                setTimeout(function() {
+                    // 随机类别
+                    const categories = [
+                        '⚔️ SSR-暗影龙王',
+                        '🔥 SR-烈焰凤凰',
+                        '❄️ R-冰霜巨人',
+                        '⚡ SR-雷霆领主',
+                        '💎 UR-黄金圣龙',
+                        '🌪️ SSR-风暴之眼',
+                        '🛡️ R-钢铁壁垒'
+                    ];
+                    const randomCat = categories[Math.floor(Math.random() * categories.length)];
+                    const confidence = 0.78 + Math.random() * 0.21;
+
+                    // 显示结果
+                    resultCategory.textContent = randomCat;
+                    const confPercent = (confidence * 100).toFixed(0);
+                    confidenceBar.style.width = confPercent + '%';
+                    confidenceText.textContent = confPercent + '%';
+
+                    // ---- 生成标注图 ----
+                    const img = originalPreview.querySelector('img');
+                    if (img) {
+                        const canvas = document.createElement('canvas');
+                        const maxSize = 500;
+                        let w = img.naturalWidth || 400;
+                        let h = img.naturalHeight || 400;
+
+                        if (w > maxSize) {
+                            h = h * maxSize / w;
+                            w = maxSize;
+                        }
+                        if (h > maxSize) {
+                            w = w * maxSize / h;
+                            h = maxSize;
+                        }
+
+                        canvas.width = w;
+                        canvas.height = h;
+
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, w, h);
+
+                        // 绘制发光边框
+                        ctx.shadowColor = 'rgba(246, 184, 61, 0.5)';
+                        ctx.shadowBlur = 25;
+                        ctx.strokeStyle = '#f6b83d';
+                        ctx.lineWidth = 4;
+                        const margin = 30;
+                        ctx.strokeRect(margin, margin, w - margin * 2, h - margin * 2);
+                        ctx.shadowBlur = 0;
+
+                        // 绘制半透明背景标签
+                        ctx.fillStyle = 'rgba(11, 17, 32, 0.75)';
+                        const textW = ctx.measureText(randomCat).width + 44;
+                        const textH = 44;
+                        const tx = margin;
+                        const ty = margin - textH + 6;
+                        ctx.shadowColor = 'rgba(0,0,0,0.5)';
+                        ctx.shadowBlur = 15;
+                        ctx.beginPath();
+                        ctx.roundRect(tx, ty, textW, textH, 10);
+                        ctx.fill();
+                        ctx.shadowBlur = 0;
+
+                        // 绘制文字
+                        ctx.fillStyle = '#f6b83d';
+                        ctx.font = 'bold 18px "Segoe UI", Arial, sans-serif';
+                        ctx.textAlign = 'left';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(randomCat, tx + 22, ty + textH / 2);
+
+                        // 绘制置信度小标签
+                        const confText = confPercent + '%';
+                        ctx.fillStyle = 'rgba(11, 17, 32, 0.7)';
+                        const cw = ctx.measureText(confText).width + 30;
+                        const ch = 32;
+                        const cx = w - margin - cw;
+                        const cy = margin - ch + 6;
+                        ctx.shadowColor = 'rgba(0,0,0,0.4)';
+                        ctx.shadowBlur = 12;
+                        ctx.beginPath();
+                        ctx.roundRect(cx, cy, cw, ch, 8);
+                        ctx.fill();
+                        ctx.shadowBlur = 0;
+
+                        ctx.fillStyle = '#22c55e';
+                        ctx.font = 'bold 15px "Segoe UI", Arial, sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(confText, cx + cw / 2, cy + ch / 2);
+
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+                        annotatedPreview.innerHTML = '<img src="' + dataUrl + '" alt="标注效果图" />';
+                        currentAnnotatedDataUrl = dataUrl;
+                        downloadBtn.disabled = false;
+                    } else {
+                        annotatedPreview.innerHTML = `
+                                    <div class="placeholder-text" style="color:#fca5a5;">
+                                        <span class="ph-icon">⚠️</span>
+                                        <span>无法生成标注图，请先上传图片</span>
+                                    </div>
+                                `;
+                    }
+
+                    recognizeBtn.disabled = false;
+                }, 1800);
+            }
+
+            // ---- 下载标注图 ----
+            downloadBtn.addEventListener('click', function() {
+                if (!currentAnnotatedDataUrl) {
+                    alert('没有可下载的标注图，请先识别');
+                    return;
+                }
+
+                const link = document.createElement('a');
+                const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+                link.download = 'recognition_' + timestamp + '.jpg';
+                link.href = currentAnnotatedDataUrl;
+                link.click();
+            });
+
+            // ---- Canvas roundRect polyfill ----
+            if (!CanvasRenderingContext2D.prototype.roundRect) {
+                CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+                    if (r > w / 2) r = w / 2;
+                    if (r > h / 2) r = h / 2;
+                    this.moveTo(x + r, y);
+                    this.arcTo(x + w, y, x + w, y + h, r);
+                    this.arcTo(x + w, y + h, x, y + h, r);
+                    this.arcTo(x, y + h, x, y, r);
+                    this.arcTo(x, y, x + w, y, r);
+                    return this;
+                };
+            }
+
+        })();
+    </script>
+
+</body>
+</html>

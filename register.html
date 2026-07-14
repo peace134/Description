@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>卡牌大师 · 注册</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- ===== 粒子背景 ===== -->
+    <canvas id="particlesCanvas"></canvas>
+
+    <!-- ===== 光晕装饰 ===== -->
+    <div class="glow-orb glow-orb--1" style="background:rgba(167,139,250,0.15);"></div>
+    <div class="glow-orb glow-orb--2" style="background:rgba(246,184,61,0.12);"></div>
+    <div class="glow-orb glow-orb--3" style="background:rgba(236,72,153,0.05);"></div>
+
+    <!-- ===== 注册卡片 ===== -->
+    <div class="auth-wrapper">
+        <div class="auth-card">
+
+            <!-- Brand -->
+            <div class="brand">
+                <span class="brand-icon">🃏</span>
+                <h1 style="background:linear-gradient(135deg,#ffffff,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">创建新账号</h1>
+                <p>加入卡牌大师 · 开启识别之旅</p>
+            </div>
+
+            <!-- 消息 -->
+            <div class="msg msg--error" id="errorMsg">
+                <span class="msg-icon">⚡</span>
+                <span id="errorText">错误信息</span>
+            </div>
+            <div class="msg msg--success" id="successMsg">
+                <span class="msg-icon">✅</span>
+                <span id="successText">注册成功！正在跳转登录…</span>
+            </div>
+
+            <!-- 表单 -->
+            <form id="registerForm" autocomplete="off">
+                <div class="form-group">
+                    <label>
+                        <span class="label-icon">👤</span> 用户名
+                    </label>
+                    <div class="input-wrap">
+                        <input type="text" id="username" placeholder="至少 2 个字符" required />
+                        <span class="input-glow"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <span class="label-icon">🔒</span> 密码
+                    </label>
+                    <div class="input-wrap">
+                        <input type="password" id="password" placeholder="至少 4 个字符" required />
+                        <button type="button" class="toggle-pwd" aria-label="显示密码">👁️</button>
+                        <span class="input-glow"></span>
+                    </div>
+                    <!-- 密码强度指示器 -->
+                    <div class="pwd-strength" id="pwdStrength">
+                        <span class="bar" data-index="0"></span>
+                        <span class="bar" data-index="1"></span>
+                        <span class="bar" data-index="2"></span>
+                        <span class="bar" data-index="3"></span>
+                    </div>
+                    <div class="pwd-strength-label" id="pwdStrengthLabel">密码强度：弱</div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <span class="label-icon">✅</span> 确认密码
+                    </label>
+                    <div class="input-wrap">
+                        <input type="password" id="confirmPwd" placeholder="再次输入密码" required />
+                        <button type="button" class="toggle-pwd" aria-label="显示密码">👁️</button>
+                        <span class="input-glow"></span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-purple" id="registerBtn">
+                    <span class="btn-content">
+                        <span class="btn-text">📝 立即注册</span>
+                        <span class="spinner"></span>
+                    </span>
+                </button>
+            </form>
+
+            <!-- 底部 -->
+            <div class="auth-footer">
+                <a href="login.html">
+                    ← 返回登录
+                    <span class="arrow"></span>
+                </a>
+                <a href="#" style="color:rgba(255,255,255,0.12); pointer-events:none;">
+                    🔒 安全加密
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <!-- ===== 注册专用逻辑 ===== -->
+    <script>
+        (function() {
+            // 如果已登录直接跳转
+            if (localStorage.getItem('isLogin') === 'true') {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const form = document.getElementById('registerForm');
+            const errorMsg = document.getElementById('errorMsg');
+            const errorText = document.getElementById('errorText');
+            const successMsg = document.getElementById('successMsg');
+            const successText = document.getElementById('successText');
+            const registerBtn = document.getElementById('registerBtn');
+            const pwdInput = document.getElementById('password');
+            const confirmInput = document.getElementById('confirmPwd');
+
+            function hideAllMessages() {
+                errorMsg.classList.remove('show');
+                successMsg.classList.remove('show');
+            }
+
+            // ---- 密码强度检测 ----
+            function checkPasswordStrength(password) {
+                let score = 0;
+                if (password.length >= 4) score++;
+                if (password.length >= 8) score++;
+                if (/[A-Z]/.test(password) && /[a-z]/.test(password)) score++;
+                if (/\d/.test(password)) score++;
+                if (/[^A-Za-z0-9]/.test(password)) score++;
+                return Math.min(score, 4);
+            }
+
+            pwdInput.addEventListener('input', function() {
+                const pwd = this.value;
+                const strength = checkPasswordStrength(pwd);
+                const bars = document.querySelectorAll('#pwdStrength .bar');
+                const label = document.getElementById('pwdStrengthLabel');
+
+                bars.forEach((bar, index) => {
+                    bar.classList.remove('active', 'weak', 'medium', 'strong');
+                    if (index < strength) {
+                        bar.classList.add('active');
+                        if (strength <= 2) bar.classList.add('weak');
+                        else if (strength === 3) bar.classList.add('medium');
+                        else bar.classList.add('strong');
+                    }
+                });
+
+                if (pwd.length === 0) {
+                    label.textContent = '密码强度：请设置密码';
+                } else if (strength <= 1) {
+                    label.textContent = '密码强度：弱';
+                } else if (strength === 2) {
+                    label.textContent = '密码强度：一般';
+                } else if (strength === 3) {
+                    label.textContent = '密码强度：强';
+                } else {
+                    label.textContent = '密码强度：非常强 💪';
+                }
+            });
+
+            // ---- 实时确认密码匹配 ----
+            confirmInput.addEventListener('input', function() {
+                const pwd = pwdInput.value;
+                const confirm = this.value;
+                const wrap = this.closest('.input-wrap');
+                if (confirm.length > 0 && pwd !== confirm) {
+                    wrap.style.borderColor = 'rgba(239, 68, 68, 0.5)';
+                    wrap.style.boxShadow = '0 0 0 4px rgba(239, 68, 68, 0.08)';
+                } else if (confirm.length > 0 && pwd === confirm) {
+                    wrap.style.borderColor = 'rgba(34, 197, 94, 0.5)';
+                    wrap.style.boxShadow = '0 0 0 4px rgba(34, 197, 94, 0.08)';
+                } else {
+                    wrap.style.borderColor = '';
+                    wrap.style.boxShadow = '';
+                }
+            });
+
+            // ---- 表单提交 ----
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                hideAllMessages();
+
+                const username = document.getElementById('username').value.trim();
+                const password = pwdInput.value.trim();
+                const confirmPwd = confirmInput.value.trim();
+
+                // 校验1：用户名
+                if (username.length < 2) {
+                    errorText.textContent = '⚠️ 用户名至少需要 2 个字符';
+                    errorMsg.classList.add('show');
+                    shakeElement(errorMsg);
+                    return;
+                }
+
+                // 校验2：密码长度
+                if (password.length < 4) {
+                    errorText.textContent = '⚠️ 密码至少需要 4 个字符';
+                    errorMsg.classList.add('show');
+                    shakeElement(errorMsg);
+                    return;
+                }
+
+                // 校验3：确认密码
+                if (password !== confirmPwd) {
+                    errorText.textContent = '⚠️ 两次密码输入不一致';
+                    errorMsg.classList.add('show');
+                    shakeElement(errorMsg);
+                    return;
+                }
+
+                // 校验4：用户名是否已被注册
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                if (users.some(u => u.username === username)) {
+                    errorText.textContent = '⚠️ 用户名 "' + username + '" 已被注册，请换一个';
+                    errorMsg.classList.add('show');
+                    shakeElement(errorMsg);
+                    return;
+                }
+
+                // ---- 注册成功 ----
+                users.push({ username, password });
+                localStorage.setItem('users', JSON.stringify(users));
+
+                // 显示成功
+                successText.textContent = '🎉 注册成功！欢迎 ' + username + '，即将跳转登录…';
+                successMsg.classList.add('show');
+
+                // 按钮加载状态
+                registerBtn.classList.add('loading');
+                registerBtn.disabled = true;
+
+                setTimeout(() => {
+                    registerBtn.classList.remove('loading');
+                    registerBtn.disabled = false;
+                    window.location.href = 'login.html';
+                }, 1600);
+            });
+
+            function shakeElement(el) {
+                el.style.animation = 'none';
+                void el.offsetHeight;
+                el.style.animation = 'shake 0.4s ease';
+            }
+
+            // 注入 shake 动画
+            const styleShake = document.createElement('style');
+            styleShake.textContent = `
+                        @keyframes shake {
+                            0%, 100% { transform: translateX(0); }
+                            20% { transform: translateX(-10px); }
+                            40% { transform: translateX(10px); }
+                            60% { transform: translateX(-6px); }
+                            80% { transform: translateX(6px); }
+                        }
+                    `;
+            document.head.appendChild(styleShake);
+
+            // 点击输入框清除错误状态
+            document.querySelectorAll('.input-wrap input').forEach(input => {
+                input.addEventListener('focus', () => {
+                    hideAllMessages();
+                });
+            });
+        })();
+    </script>
+
+</body>
+</html>
