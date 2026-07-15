@@ -1,0 +1,14 @@
+Index: 数据集/.idea/inspectionProfiles/profiles_settings.xml
+===================================================================
+diff --git a/数据集/.idea/inspectionProfiles/profiles_settings.xml b/数据集/.idea/inspectionProfiles/profiles_settings.xml
+deleted file mode 100644
+--- a/数据集/.idea/inspectionProfiles/profiles_settings.xml	(revision 7b83c3a689d2bdf34cfdbd3e45491fa99db770b4)
++++ /dev/null	(revision 7b83c3a689d2bdf34cfdbd3e45491fa99db770b4)
+@@ -1,6 +0,0 @@
+-<component name="InspectionProjectProfileManager">
+-  <settings>
+-    <option name="USE_PROJECT_PROFILE" value="false" />
+-    <version value="1.0" />
+-  </settings>
+-</component>
+\ No newline at end of file
