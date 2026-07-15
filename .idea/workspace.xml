@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d97b07e-90cb-49d6-88e8-4b809911b1d0" name="更改" comment="111">
+    <list default="true" id="0d97b07e-90cb-49d6-88e8-4b809911b1d0" name="更改" comment="opencv模型">
+      <change afterPath="$PROJECT_DIR$/模型/mobilentv3/class_indices.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/模型/mobilentv3/mobilenetv3.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/模型/mobilentv3/mobilenetv3_small.pth" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/模型/opencv/class_names.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/MarsCodeWorkspaceAppSettings.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/模型/model.h5" beforeDir="false" afterPath="$PROJECT_DIR$/模型/opencv/model.h5" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,23 +35,23 @@
 }</component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0" />
-      <entry key="S5" value="1.0" />
-      <entry key="S10" value="1.0" />
-      <entry key="S30" value="1.0" />
-      <entry key="S60" value="1.0" />
-      <entry key="M2" value="1.0" />
-      <entry key="M5" value="1.0" />
-      <entry key="M10" value="1.0" />
-      <entry key="M15" value="1.0" />
-      <entry key="M30" value="1.0" />
-      <entry key="H1" value="1.0" />
-      <entry key="H2" value="1.0" />
-      <entry key="H4" value="1.0" />
-      <entry key="D1" value="1.0" />
-      <entry key="W1" value="1.0" />
+      <entry key="MS100" value="1.0000000000143516" />
+      <entry key="MS500" value="1.0069655722739863" />
+      <entry key="S2" value="1.533623603671171" />
+      <entry key="S5" value="2.7050280899229193" />
+      <entry key="S10" value="3.5924124782513496" />
+      <entry key="S30" value="4.456176615170594" />
+      <entry key="S60" value="4.7174507050672805" />
+      <entry key="M2" value="4.855956124478768" />
+      <entry key="M5" value="4.941703240181461" />
+      <entry key="M10" value="4.970737179144253" />
+      <entry key="M15" value="4.980465928800855" />
+      <entry key="M30" value="4.990220179178158" />
+      <entry key="H1" value="4.995106888918141" />
+      <entry key="H2" value="4.997552643744996" />
+      <entry key="H4" value="4.998776121625644" />
+      <entry key="D1" value="4.999795992453075" />
+      <entry key="W1" value="4.999970855383396" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -64,23 +73,23 @@
       <entry key="W1" value="0.0" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.39776824187745935" />
-      <entry key="MS500" value="0.8316220983749064" />
-      <entry key="S2" value="0.9549519179098857" />
-      <entry key="S5" value="0.9817312198137411" />
-      <entry key="S10" value="0.990823505884747" />
-      <entry key="S30" value="0.9969317641854318" />
-      <entry key="S60" value="0.998464703525083" />
-      <entry key="M2" value="0.9992320568942347" />
-      <entry key="M5" value="0.9996927519603012" />
-      <entry key="M10" value="0.9998463641781677" />
-      <entry key="M15" value="0.9998975734959366" />
-      <entry key="M30" value="0.9999487854365025" />
-      <entry key="H1" value="0.9999743923903764" />
-      <entry key="H2" value="0.9999871961132184" />
-      <entry key="H4" value="0.9999935980361166" />
-      <entry key="D1" value="0.9999989330031732" />
-      <entry key="W1" value="0.9999998475718122" />
+      <entry key="MS100" value="0.9460576467391734" />
+      <entry key="MS500" value="0.9958532320165641" />
+      <entry key="S2" value="1.5248486147046794" />
+      <entry key="S5" value="2.6930113229949777" />
+      <entry key="S10" value="3.5827159538851148" />
+      <entry key="S30" value="4.451681529146224" />
+      <entry key="S60" value="4.715007413307008" />
+      <entry key="M2" value="4.854682212465894" />
+      <entry key="M5" value="4.941180682236121" />
+      <entry key="M10" value="4.97047369620264" />
+      <entry key="M15" value="4.980289780851099" />
+      <entry key="M30" value="4.990131858150929" />
+      <entry key="H1" value="4.995062666505226" />
+      <entry key="H2" value="4.997530517046658" />
+      <entry key="H4" value="4.998765054401371" />
+      <entry key="D1" value="4.999794147377306" />
+      <entry key="W1" value="4.999970591787957" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -92,16 +101,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "E:/Description/模型/mobilentv3",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Description\模型\mobilentv3" />
+      <recent name="E:\Description\模型\opencv" />
+      <recent name="E:\Description\模型" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Description\模型\opencv" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -125,14 +149,35 @@
       <option name="project" value="LOCAL" />
       <updated>1784083370059</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="opencv模型">
+      <option name="closed" value="true" />
+      <created>1784128439880</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1784128439880</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="111" />
-    <option name="LAST_COMMIT_MESSAGE" value="111" />
+    <MESSAGE value="opencv模型" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/main'" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/main'" />
   </component>
 </project>
