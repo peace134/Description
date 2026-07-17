@@ -5,18 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d97b07e-90cb-49d6-88e8-4b809911b1d0" name="更改" comment="opencv模型">
-      <change afterPath="$PROJECT_DIR$/模型/mobilentv3/class_indices.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/模型/mobilentv3/mobilenetv3.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/模型/mobilentv3/mobilenetv3_small.pth" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/模型/opencv/class_names.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/MarsCodeWorkspaceAppSettings.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/api/download.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/api/routes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/api/upload.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/app.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/core/model_loader.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/core/visualizer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/docs/API.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/run.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/tests/test_api.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/utils/file_manager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/utils/response.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Description.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Description.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/模型/model.h5" beforeDir="false" afterPath="$PROJECT_DIR$/模型/opencv/model.h5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/模型/mobilentv3/class_indices.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/mobilenetv3/class_indices.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/模型/mobilentv3/mobilenetv3.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/mobilenetv3/mobilenetv3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/模型/mobilentv3/mobilenetv3_small.pth" beforeDir="false" afterPath="$PROJECT_DIR$/backend/mobilenetv3/mobilenetv3_small.pth" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/模型/opencv/class_names.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/opencv/class_names.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/模型/opencv/model.h5" beforeDir="false" afterPath="$PROJECT_DIR$/backend/opencv/model.h5" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -30,7 +50,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/peace134/Description.git&quot;,
-    &quot;accountId&quot;: &quot;bde2ee5c-7418-41ae-ba9c-2ec92ff89891&quot;
+    &quot;accountId&quot;: &quot;dd0f197c-3fa1-4cf7-8c39-b4075316de34&quot;
   }
 }</component>
   <component name="NextEditCompletionFeaturesState">
@@ -104,7 +124,10 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python tests.Python tests in test_api.py.executor": "Run",
+    "Python.app.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
@@ -113,7 +136,8 @@
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)"
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -123,6 +147,7 @@
       <recent name="E:\Description\模型" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Description\backend" />
       <recent name="E:\Description\模型\opencv" />
     </key>
   </component>
