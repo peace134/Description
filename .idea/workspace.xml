@@ -5,38 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d97b07e-90cb-49d6-88e8-4b809911b1d0" name="更改" comment="opencv模型">
-      <change afterPath="$PROJECT_DIR$/backend/api/download.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/api/routes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/api/upload.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/app.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/core/model_loader.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/core/visualizer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/docs/API.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/run.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/tests/test_api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/utils/file_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/utils/response.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/tests/test_images/card02_01.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/tests/test_images/card04_01.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/tests/test_images/card05_01.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/tests/test_images/test.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/Description.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Description.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/模型/mobilentv3/class_indices.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/mobilenetv3/class_indices.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/模型/mobilentv3/mobilenetv3.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/mobilenetv3/mobilenetv3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/模型/mobilentv3/mobilenetv3_small.pth" beforeDir="false" afterPath="$PROJECT_DIR$/backend/mobilenetv3/mobilenetv3_small.pth" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/模型/opencv/class_names.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/opencv/class_names.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/模型/opencv/model.h5" beforeDir="false" afterPath="$PROJECT_DIR$/backend/opencv/model.h5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/upload.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/upload.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/core/model_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/core/model_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/tests/test_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/tests/test_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/file_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/file_manager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Python Script" />
-      </list>
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -50,28 +33,28 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/peace134/Description.git&quot;,
-    &quot;accountId&quot;: &quot;dd0f197c-3fa1-4cf7-8c39-b4075316de34&quot;
+    &quot;accountId&quot;: &quot;bde2ee5c-7418-41ae-ba9c-2ec92ff89891&quot;
   }
 }</component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0000000000143516" />
-      <entry key="MS500" value="1.0069655722739863" />
-      <entry key="S2" value="1.533623603671171" />
-      <entry key="S5" value="2.7050280899229193" />
-      <entry key="S10" value="3.5924124782513496" />
-      <entry key="S30" value="4.456176615170594" />
-      <entry key="S60" value="4.7174507050672805" />
-      <entry key="M2" value="4.855956124478768" />
-      <entry key="M5" value="4.941703240181461" />
-      <entry key="M10" value="4.970737179144253" />
-      <entry key="M15" value="4.980465928800855" />
-      <entry key="M30" value="4.990220179178158" />
-      <entry key="H1" value="4.995106888918141" />
-      <entry key="H2" value="4.997552643744996" />
-      <entry key="H4" value="4.998776121625644" />
-      <entry key="D1" value="4.999795992453075" />
-      <entry key="W1" value="4.999970855383396" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0000000008007106" />
+      <entry key="S2" value="1.0053283417129215" />
+      <entry key="S5" value="1.139869927197552" />
+      <entry key="S10" value="1.5706066922109612" />
+      <entry key="S30" value="2.9545720954257604" />
+      <entry key="S60" value="3.7748680705452937" />
+      <entry key="M2" value="4.3675045202420435" />
+      <entry key="M5" value="5.539916504082448" />
+      <entry key="M10" value="7.080606535727209" />
+      <entry key="M15" value="8.00051261569503" />
+      <entry key="M30" value="9.262424803982924" />
+      <entry key="H1" value="10.061564125622477" />
+      <entry key="H2" value="10.511904580230452" />
+      <entry key="H4" value="10.75103623243832" />
+      <entry key="D1" value="10.957805889449212" />
+      <entry key="W1" value="10.99395489233846" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -93,23 +76,23 @@
       <entry key="W1" value="0.0" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.9460576467391734" />
-      <entry key="MS500" value="0.9958532320165641" />
-      <entry key="S2" value="1.5248486147046794" />
-      <entry key="S5" value="2.6930113229949777" />
-      <entry key="S10" value="3.5827159538851148" />
-      <entry key="S30" value="4.451681529146224" />
-      <entry key="S60" value="4.715007413307008" />
-      <entry key="M2" value="4.854682212465894" />
-      <entry key="M5" value="4.941180682236121" />
-      <entry key="M10" value="4.97047369620264" />
-      <entry key="M15" value="4.980289780851099" />
-      <entry key="M30" value="4.990131858150929" />
-      <entry key="H1" value="4.995062666505226" />
-      <entry key="H2" value="4.997530517046658" />
-      <entry key="H4" value="4.998765054401371" />
-      <entry key="D1" value="4.999794147377306" />
-      <entry key="W1" value="4.999970591787957" />
+      <entry key="MS100" value="0.8827029962906549" />
+      <entry key="MS500" value="0.9753554623195213" />
+      <entry key="S2" value="0.9990946664715116" />
+      <entry key="S5" value="1.1372111278304033" />
+      <entry key="S10" value="1.5689716336555717" />
+      <entry key="S30" value="2.9536658724087164" />
+      <entry key="S60" value="3.774305058528339" />
+      <entry key="M2" value="4.3671718995675635" />
+      <entry key="M5" value="5.539667421750261" />
+      <entry key="M10" value="7.0803857577366776" />
+      <entry key="M15" value="8.000325825426826" />
+      <entry key="M30" value="9.262303929147121" />
+      <entry key="H1" value="10.061494929632149" />
+      <entry key="H2" value="10.511867507432077" />
+      <entry key="H4" value="10.751017038124578" />
+      <entry key="D1" value="10.957802595511868" />
+      <entry key="W1" value="10.993954419405267" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -124,30 +107,33 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python tests.Python tests in test_api.py.executor": "Run",
     "Python.app.executor": "Run",
+    "Python.run.executor": "Run",
+    "Python.test_api.executor": "Run",
+    "Python.upload.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "E:/Description/模型/mobilentv3",
+    "last_opened_file_path": "E:/Description/backend/tests/test_images",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm"
+    "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Description\backend\tests\test_images" />
+      <recent name="E:\Description" />
       <recent name="E:\Description\模型\mobilentv3" />
       <recent name="E:\Description\模型\opencv" />
       <recent name="E:\Description\模型" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Description\backend" />
+      <recent name="E:\Description\backend\tests\test_images" />
+      <recent name="E:\Description\backend\tests" />
       <recent name="E:\Description\模型\opencv" />
     </key>
   </component>

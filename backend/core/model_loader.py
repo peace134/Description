@@ -83,6 +83,8 @@ class CardClassifier:
         # 转换为 PIL Image
         if isinstance(image, np.ndarray):
             image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+            img_hash = hash(image.tobytes()) % 1000000
+            logger.info(f"🖼️ 模型接收到的图片: {image.size}, hash: {img_hash}")
         elif isinstance(image, str):
             image = Image.open(image)
 

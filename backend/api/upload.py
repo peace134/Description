@@ -35,14 +35,30 @@ def handle_upload():
         if ext not in Config.ALLOWED_EXTENSIONS:
             return error_response(f'不支持的文件类型: {ext}')
 
-        file_id, file_path, original_name = file_manager.save_upload(file)
-
+        # 先读取文件内容
         img_bytes = file.read()
+        logger.info(f"📥 接收到文件: {file.filename}, 大小: {len(img_bytes)} bytes")
+        
+        # 验证图片数据唯一性
+        import hashlib
+        img_hash = hashlib.md5(img_bytes).hexdigest()[:8]
+        logger.info(f"🔑 图片MD5: {img_hash}")
+        
+        # 重置文件指针，以便 save_upload 可以再次读取
+        file.seek(0)
+        
+        file_id, file_path, original_name = file_manager.save_upload(file)
+        logger.info(f"🆔 生成 file_id: {file_id}")
+
         nparr = np.frombuffer(img_bytes, np.uint8)
         image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
         if image is None:
+            logger.error(f"❌ 图片解码失败: {file.filename}")
             return error_response('图片解码失败')
+        
+        logger.info(f"🖼️ 图片尺寸: {image.shape[1]}x{image.shape[0]}, 文件名: {file.filename}")
+        logger.info(f"📊 图片数据摘要: {img_bytes[:20].hex()}")  # 打印前20字节的hex用于对比
 
         # ========== 1. 检测所有卡牌 ==========
         circles = visualizer.detect_cards(image)
@@ -76,6 +92,7 @@ def handle_upload():
 
                 # 识别单张卡牌
                 class_id, class_name, confidence = model.predict(card_roi)
+                logger.info(f"🎴 卡牌识别: {class_name} ({confidence:.2%}) at ({x1},{y1})-({x2},{y2})")
 
                 results.append({
                     'class_id': class_id,
@@ -129,7 +146,7 @@ def handle_upload():
 
 def draw_clean_annotations(image, results):
     """
-    在图上标注所有卡牌 - 不遮挡图案
+    在图上标注所有卡牌 - 矩形边框样式
     """
     img = image.copy()
     h, w = img.shape[:2]
@@ -139,87 +156,52 @@ def draw_clean_annotations(image, results):
     draw = ImageDraw.Draw(img_pil)
 
     try:
-        font = ImageFont.truetype("simhei.ttf", 18)
-        font_small = ImageFont.truetype("simhei.ttf", 14)
+        font = ImageFont.truetype("simhei.ttf", 14)
     except:
         font = ImageFont.load_default()
-        font_small = font
+
+    # 简洁配色方案
+    colors = [
+        (0, 255, 0),     # 绿色
+        (255, 0, 0),     # 红色
+        (0, 0, 255),     # 蓝色
+        (255, 255, 0),   # 黄色
+        (255, 0, 255),   # 紫色
+        (0, 255, 255),   # 青色
+        (255, 165, 0),   # 橙色
+        (128, 0, 128),   # 深紫
+    ]
 
     for i, result in enumerate(results):
         x1, y1, x2, y2 = result['bbox']
         class_name = result['class_name']
         confidence = result['confidence']
-        center_x = (x1 + x2) // 2
-        center_y = (y1 + y2) // 2
-        radius = (x2 - x1) // 2
-
-        # ========== 不同颜色的边框 ==========
-        colors = [
-            (246, 184, 61),  # 金色
-            (167, 139, 250),  # 紫色
-            (34, 197, 94),  # 绿色
-            (59, 130, 246),  # 蓝色
-            (236, 72, 153),  # 粉色
-            (239, 68, 68),  # 红色
-            (251, 191, 36),  # 黄色
-            (52, 211, 153),  # 青色
-        ]
         color = colors[i % len(colors)]
 
-        # ========== 画圆形边框（不遮挡图案） ==========
-        # 画在圆的外围，不覆盖图案内容
-        for j in range(2, 0, -1):
-            offset = j * 3
-            draw.ellipse(
-                [center_x - radius - offset, center_y - radius - offset,
-                 center_x + radius + offset, center_y + radius + offset],
-                outline=(color[0], color[1], color[2], max(80, 255 - j * 80)),
-                width=max(1, j)
-            )
-
-        # 主圆形边框（虚线效果 - 用点画圆）
-        draw.ellipse(
-            [center_x - radius, center_y - radius,
-             center_x + radius, center_y + radius],
+        # ========== 1. 绘制矩形边框 ==========
+        draw.rectangle(
+            [x1, y1, x2, y2],
             outline=color,
             width=2
         )
 
-        # ========== 标签放在卡牌外部（不遮挡图案） ==========
-        label = f"{i + 1}.{class_name[:8]} {int(confidence * 100)}%"
+        # ========== 2. 类别标签（边框上方） ==========
+        label = f"{class_name[:10]} ({confidence:.2f})"
 
         # 测量文字宽度
         bbox = draw.textbbox((0, 0), label, font=font)
         text_w = bbox[2] - bbox[0]
         text_h = bbox[3] - bbox[1]
 
-        # 标签位置：放在卡牌正下方
-        label_x = center_x - text_w // 2
-        label_y = y2 + 8
+        # 标签位置：边框上方
+        label_x = x1
+        label_y = y1 - text_h - 4
 
-        # 如果下方空间不够，放在上方
-        if label_y + text_h > h - 10:
-            label_y = y1 - text_h - 8
-
-        # 如果上方也不够，放在左右两侧
+        # 如果上方空间不够，放在边框内部上方
         if label_y < 0:
-            # 放在右侧
-            label_x = x2 + 8
-            label_y = center_y - text_h // 2
-            # 如果右侧不够，放在左侧
-            if label_x + text_w > w - 10:
-                label_x = x1 - text_w - 8
+            label_y = y1 + 2
 
-        # 半透明背景（让文字更清晰但不遮挡图案）
-        bg_padding = 6
-        draw.rectangle(
-            [label_x - bg_padding, label_y - bg_padding,
-             label_x + text_w + bg_padding, label_y + text_h + bg_padding],
-            fill=(11, 17, 32, 180)  # 半透明深色背景
-        )
-
-        # 描边文字（更清晰）
-        # 白色描边
+        # 白色描边（让文字在任何背景上都清晰）
         for dx, dy in [(-1, -1), (-1, 1), (1, -1), (1, 1)]:
             draw.text(
                 (label_x + dx, label_y + dy),
@@ -227,25 +209,8 @@ def draw_clean_annotations(image, results):
                 fill=(0, 0, 0),
                 font=font
             )
-        # 主文字
+        # 彩色文字
         draw.text((label_x, label_y), label, fill=color, font=font)
-
-        # ========== 编号小标签（卡牌角落，半透明） ==========
-        num_label = str(i + 1)
-        num_bbox = draw.textbbox((0, 0), num_label, font=font_small)
-        num_w = num_bbox[2] - num_bbox[0]
-        num_h = num_bbox[3] - num_bbox[1]
-
-        # 编号放在卡牌左上角（半透明，不遮挡图案）
-        num_x = x1 + 6
-        num_y = y1 + 6
-
-        # 半透明圆形背景
-        draw.ellipse(
-            [num_x - 8, num_y - 8, num_x + num_w + 8, num_y + num_h + 8],
-            fill=(11, 17, 32, 160)
-        )
-        draw.text((num_x, num_y), num_label, fill=(255, 255, 255), font=font_small)
 
     # 转换回 OpenCV
     return cv2.cvtColor(np.array(img_pil), cv2.COLOR_RGB2BGR)

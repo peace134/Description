@@ -68,4 +68,8 @@ class FileManager:
         return None
 
     def _generate_id(self):
-        return f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
+        # 使用微秒级时间戳 + UUID 确保唯一性
+        import time
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S_%f')  # %f 是微秒
+        unique_id = uuid.uuid4().hex[:6]
+        return f"{timestamp}_{unique_id}"
