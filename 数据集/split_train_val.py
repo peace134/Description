@@ -21,8 +21,8 @@ for cls_name in os.listdir(dataset_dir):
 
     # 获取当前类别所有图片并排序
     imgs = sorted(os.listdir(cls_path))
-    train_imgs = imgs[:2]
-    val_imgs = imgs[2:]
+    train_imgs = imgs[:8]
+    val_imgs = imgs[8:]
 
     # 复制训练图片
     for img in train_imgs:
@@ -35,4 +35,4 @@ for cls_name in os.listdir(dataset_dir):
         dst = os.path.join(target_val_cls, img)
         shutil.copy(src, dst)
 
-print("训练集、验证集划分完毕！每类2张训练，1张验证")
+print("训练集、验证集划分完毕！每类8张训练，2张验证")
