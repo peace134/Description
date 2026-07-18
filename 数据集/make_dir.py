@@ -1,27 +1,29 @@
 import os
 import shutil
 
-# 定义路径（之前缺失这两行，程序找不到文件夹）
-src_dir = "card_out"
-target_root = "dataset"
+base = os.path.dirname(os.path.abspath(__file__))
+card_out_path = os.path.join(base, "card_out")
+dataset_path = os.path.join(base, "dataset")
 
-# 1. 批量创建 type01 ~ type55 文件夹
-for i in range(55):
-    folder_name = f"type{i+1:02d}"
-    folder_path = os.path.join(target_root, folder_name)
-    if not os.path.exists(folder_path):
-        os.makedirs(folder_path)
+rows = 5
+cols = 11
+class_id = 1
+# 10张原图全部参与分类
+pic_nums = [1,2,3,4,5,6,7,8,9,10]
 
-# 2. 遍历所有裁剪图片，自动分类
-for filename in os.listdir(src_dir):
-    if "_card_" not in filename:
-        continue
-    # 修复错误：删掉不存在的 old、new 变量
-    idx_str = filename.split("_card_")[-1].replace(".png", "")
-    idx = int(idx_str)
-    target_folder = os.path.join(target_root, f"type{idx+1:02d}")
-    src_file = os.path.join(src_dir, filename)
-    dst_file = os.path.join(target_folder, filename)
-    shutil.copy(src_file, dst_file)
-
-print("图片分类完成，全部存入dataset文件夹！")
+# 遍历5行11列共55类卡牌
+for r in range(rows):
+    for c in range(cols):
+        # 创建当前类别文件夹 type01 ~ type55
+        cls_folder = os.path.join(dataset_path, f"type{class_id:02d}")
+        os.makedirs(cls_folder, exist_ok=True)
+        # 循环10张原图同位置卡牌复制进对应分类
+        for pic in pic_nums:
+            src_file = os.path.join(card_out_path, f"{pic}_r{r}_c{c}.png")
+            dst_file = os.path.join(cls_folder, f"{pic}_r{r}_c{c}.png")
+            if os.path.exists(src_file):
+                shutil.copy(src_file, dst_file)
+            else:
+                print(f"缺失文件：{src_file}")
+        class_id += 1
+print("全部type文件夹填充图片完成！同坐标图案归为一类，色差忽略")

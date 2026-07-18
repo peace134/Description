@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d97b07e-90cb-49d6-88e8-4b809911b1d0" name="更改" comment="测试并更新了模型运用" />
+    <list default="true" id="0d97b07e-90cb-49d6-88e8-4b809911b1d0" name="更改" comment="opencv模型">
+      <change afterPath="$PROJECT_DIR$/backend/tests/test_images/card02_01.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/tests/test_images/card04_01.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/tests/test_images/card05_01.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/tests/test_images/test.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Description.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Description.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/upload.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/upload.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/core/model_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/core/model_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/tests/test_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/tests/test_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/file_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/file_manager.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,23 +38,23 @@
 }</component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0000000023413707" />
-      <entry key="MS500" value="1.0200884345959773" />
-      <entry key="S2" value="1.8228645519107387" />
-      <entry key="S5" value="3.3141285828902443" />
-      <entry key="S10" value="4.374360121442961" />
-      <entry key="S30" value="5.378058514397712" />
-      <entry key="S60" value="5.677732493957342" />
-      <entry key="M2" value="5.850427545407784" />
-      <entry key="M5" value="6.498955911706232" />
-      <entry key="M10" value="8.22855482487886" />
-      <entry key="M15" value="9.716416949378722" />
-      <entry key="M30" value="12.320610169280386" />
-      <entry key="H1" value="14.313308114492703" />
-      <entry key="H2" value="15.555522397148819" />
-      <entry key="H4" value="16.25040708545555" />
-      <entry key="D1" value="16.871078385232504" />
-      <entry key="W1" value="16.98148233993559" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0000000008007106" />
+      <entry key="S2" value="1.0053283417129215" />
+      <entry key="S5" value="1.139869927197552" />
+      <entry key="S10" value="1.5706066922109612" />
+      <entry key="S30" value="2.9545720954257604" />
+      <entry key="S60" value="3.7748680705452937" />
+      <entry key="M2" value="4.3675045202420435" />
+      <entry key="M5" value="5.539916504082448" />
+      <entry key="M10" value="7.080606535727209" />
+      <entry key="M15" value="8.00051261569503" />
+      <entry key="M30" value="9.262424803982924" />
+      <entry key="H1" value="10.061564125622477" />
+      <entry key="H2" value="10.511904580230452" />
+      <entry key="H4" value="10.75103623243832" />
+      <entry key="D1" value="10.957805889449212" />
+      <entry key="W1" value="10.99395489233846" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -65,23 +76,23 @@
       <entry key="W1" value="0.0" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.9138314524598791" />
-      <entry key="MS500" value="1.0020287491340014" />
-      <entry key="S2" value="1.815861531833912" />
-      <entry key="S5" value="3.3093401122062214" />
-      <entry key="S10" value="4.371245658765797" />
-      <entry key="S30" value="5.376791475171955" />
-      <entry key="S60" value="5.677064697316642" />
-      <entry key="M2" value="5.85008348789164" />
-      <entry key="M5" value="6.498791074902644" />
-      <entry key="M10" value="8.228414210273288" />
-      <entry key="M15" value="9.716282851960846" />
-      <entry key="M30" value="12.32050409247989" />
-      <entry key="H1" value="14.313239169062825" />
-      <entry key="H2" value="15.555482817607244" />
-      <entry key="H4" value="16.250385846868046" />
-      <entry key="D1" value="16.87107462793956" />
-      <entry key="W1" value="16.981481797627207" />
+      <entry key="MS100" value="0.8827029962906549" />
+      <entry key="MS500" value="0.9753554623195213" />
+      <entry key="S2" value="0.9990946664715116" />
+      <entry key="S5" value="1.1372111278304033" />
+      <entry key="S10" value="1.5689716336555717" />
+      <entry key="S30" value="2.9536658724087164" />
+      <entry key="S60" value="3.774305058528339" />
+      <entry key="M2" value="4.3671718995675635" />
+      <entry key="M5" value="5.539667421750261" />
+      <entry key="M10" value="7.0803857577366776" />
+      <entry key="M15" value="8.000325825426826" />
+      <entry key="M30" value="9.262303929147121" />
+      <entry key="H1" value="10.061494929632149" />
+      <entry key="H2" value="10.511867507432077" />
+      <entry key="H4" value="10.751017038124578" />
+      <entry key="D1" value="10.957802595511868" />
+      <entry key="W1" value="10.993954419405267" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -157,15 +168,7 @@
       <option name="project" value="LOCAL" />
       <updated>1784128439880</updated>
     </task>
-    <task id="LOCAL-00003" summary="测试并更新了模型运用">
-      <option name="closed" value="true" />
-      <created>1784260118623</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1784260118623</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -186,7 +189,6 @@
     <MESSAGE value="111" />
     <MESSAGE value="opencv模型" />
     <MESSAGE value="Merge remote-tracking branch 'origin/main'" />
-    <MESSAGE value="测试并更新了模型运用" />
-    <option name="LAST_COMMIT_MESSAGE" value="测试并更新了模型运用" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/main'" />
   </component>
 </project>

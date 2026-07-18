@@ -1,80 +1,39 @@
-import cv2
+from PIL import Image
 import os
-import numpy as np
 
-# 路径配置
-input_dir = "img"
-output_dir = "card_out"
+# 获取脚本所在文件夹路径
+base = os.path.dirname(os.path.abspath(__file__))
+img_dir = os.path.join(base, "img")
+out_dir = os.path.join(base, "card_out")
 
-# 创建输出文件夹
-if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
+# 创建文件夹
+os.makedirs(img_dir, exist_ok=True)
+os.makedirs(out_dir, exist_ok=True)
 
-# 遍历img文件夹所有图片
-for img_name in os.listdir(input_dir):
-    if img_name.endswith((".jpg", ".png", ".jpeg")):
-        img_path = os.path.join(input_dir, img_name)
-        img = cv2.imread(img_path)
-        if img is None:
-            print(f"无法读取图片：{img_name}，跳过")
-            continue
+rows = 5
+cols = 11
+img_names = [f"{i}.jpg" for i in range(1, 11)]
 
-        h, w = img.shape[:2]
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        gray = cv2.GaussianBlur(gray, (5, 5), 0)
-
-        # 霍夫圆检测参数
-        circles = cv2.HoughCircles(
-            gray,
-            cv2.HOUGH_GRADIENT,
-            dp=1,
-            minDist=160,
-            param1=50,
-            param2=32,
-            minRadius=75,
-            maxRadius=110
-        )
-
-        if circles is None:
-            print(f"{img_name} 未检测到圆形卡片，跳过")
-            continue
-
-        circles = np.uint16(np.around(circles))
-        circle_list = circles[0, :]
-        # 从上到下、从左到右排序
-        circle_list = sorted(circle_list, key=lambda p: (p[1], p[0]))
-
-        # 提取图片数字作为编号（1/2/3）
-        pic_id = img_name.split(".")[0]
-        idx = 0
-        for circle in circle_list:
-            x, y, r = circle
-            # 计算裁剪边界，先转int避免无符号溢出
-            offset = 10
-            x1 = int(x) - int(r) - offset
-            y1 = int(y) - int(r) - offset
-            x2 = int(x) + int(r) + offset
-            y2 = int(y) + int(r) + offset
-
-            # 边界约束，保证坐标合法，不会出现负尺寸
-            x1 = max(0, x1)
-            y1 = max(0, y1)
-            x2 = min(w, x2)
-            y2 = min(h, y2)
-
-            # 校验裁剪区域有效，宽高必须大于0
-            crop_w = x2 - x1
-            crop_h = y2 - y1
-            if crop_w <= 0 or crop_h <= 0:
-                print(f"跳过边界无效圆形 {x},{y}")
-                continue
-
-            card_crop = img[y1:y2, x1:x2]
-            save_name = f"{pic_id}_card_{idx}.png"
-            save_full_path = os.path.join(output_dir, save_name)
-            cv2.imwrite(save_full_path, card_crop)
-            idx += 1
-
-        print(f"图片 {img_name} 裁剪完成，共输出 {idx} 张卡牌")
-
-print("===== 全部图片裁剪完成 =====")
+for name in img_names:
+    full_path = os.path.join(img_dir, name)
+    if not os.path.exists(full_path):
+        print(f"文件不存在：{full_path}")
+        continue
+    try:
+        img = Image.open(full_path)
+    except Exception as e:
+        print(f"图片读取失败 {full_path}，错误：{e}")
+        continue
+    w, h = img.size
+    cell_h = h // rows
+    cell_w = w // cols
+    for r in range(rows):
+        for c in range(cols):
+            x1 = c * cell_w
+            y1 = r * cell_h
+            x2 = x1 + cell_w
+            y2 = y1 + cell_h
+            crop = img.crop((x1, y1, x2, y2))
+            save_name = f"{name[:-4]}_r{r}_c{c}.png"
+            crop.save(os.path.join(out_dir, save_name))
+print("全部原图裁剪完成！")
