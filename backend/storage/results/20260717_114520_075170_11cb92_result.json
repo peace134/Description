@@ -1,0 +1,58 @@
+{
+  "total_cards": 3,
+  "results": [
+    {
+      "class_id": 11,
+      "class_name": "dobble_test02_cards",
+      "confidence": 0.724236249923706,
+      "bbox": [
+        109,
+        106,
+        189,
+        186
+      ],
+      "center": [
+        149,
+        146
+      ],
+      "radius": 35
+    },
+    {
+      "class_id": 11,
+      "class_name": "dobble_test02_cards",
+      "confidence": 0.8871524333953857,
+      "bbox": [
+        94,
+        37,
+        154,
+        97
+      ],
+      "center": [
+        124,
+        67
+      ],
+      "radius": 25
+    },
+    {
+      "class_id": 11,
+      "class_name": "dobble_test02_cards",
+      "confidence": 0.28709810972213745,
+      "bbox": [
+        115,
+        209,
+        171,
+        265
+      ],
+      "center": [
+        143,
+        237
+      ],
+      "radius": 23
+    }
+  ],
+  "original_file": "card04_01.jpg",
+  "upload_path": "E:\\Description\\backend\\storage\\uploads\\20260717_114520_075170_11cb92.jpg",
+  "annotated_path": "E:\\Description\\backend\\storage\\annotated\\20260717_114520_075170_11cb92_annotated.jpg",
+  "file_id": "20260717_114520_075170_11cb92",
+  "timestamp": "2026-07-17T11:45:20.275380"
+}

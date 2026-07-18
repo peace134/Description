@@ -1,0 +1,40 @@
+{
+  "total_cards": 2,
+  "results": [
+    {
+      "class_id": 11,
+      "class_name": "dobble_test02_cards",
+      "confidence": 0.6377889513969421,
+      "bbox": [
+        44,
+        20,
+        104,
+        80
+      ],
+      "center": [
+        74,
+        50
+      ]
+    },
+    {
+      "class_id": 2,
+      "class_name": "dobble_deck03_cards_55",
+      "confidence": 0.47037503123283386,
+      "bbox": [
+        8,
+        52,
+        58,
+        102
+      ],
+      "center": [
+        33,
+        77
+      ]
+    }
+  ],
+  "original_file": "test.jpg",
+  "upload_path": "E:\\Description\\backend\\storage\\uploads\\20260717_105923_a4d60a59.jpg",
+  "annotated_path": "E:\\Description\\backend\\storage\\annotated\\20260717_105923_a4d60a59_annotated.jpg",
+  "file_id": "20260717_105923_a4d60a59",
+  "timestamp": "2026-07-17T10:59:24.098129"
+}

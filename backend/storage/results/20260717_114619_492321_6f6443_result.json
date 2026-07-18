@@ -1,0 +1,74 @@
+{
+  "total_cards": 4,
+  "results": [
+    {
+      "class_id": 5,
+      "class_name": "dobble_deck06_cards_55",
+      "confidence": 0.5258962512016296,
+      "bbox": [
+        204,
+        82,
+        262,
+        140
+      ],
+      "center": [
+        233,
+        111
+      ],
+      "radius": 24
+    },
+    {
+      "class_id": 4,
+      "class_name": "dobble_deck05_cards_55",
+      "confidence": 0.6614807844161987,
+      "bbox": [
+        129,
+        108,
+        221,
+        200
+      ],
+      "center": [
+        175,
+        154
+      ],
+      "radius": 41
+    },
+    {
+      "class_id": 4,
+      "class_name": "dobble_deck05_cards_55",
+      "confidence": 0.9084985852241516,
+      "bbox": [
+        107,
+        3,
+        201,
+        97
+      ],
+      "center": [
+        154,
+        50
+      ],
+      "radius": 42
+    },
+    {
+      "class_id": 4,
+      "class_name": "dobble_deck05_cards_55",
+      "confidence": 0.5288756489753723,
+      "bbox": [
+        51,
+        146,
+        127,
+        222
+      ],
+      "center": [
+        89,
+        184
+      ],
+      "radius": 33
+    }
+  ],
+  "original_file": "card05_01.jpg",
+  "upload_path": "E:\\Description\\backend\\storage\\uploads\\20260717_114619_492321_6f6443.jpg",
+  "annotated_path": "E:\\Description\\backend\\storage\\annotated\\20260717_114619_492321_6f6443_annotated.jpg",
+  "file_id": "20260717_114619_492321_6f6443",
+  "timestamp": "2026-07-17T11:46:19.606361"
+}
